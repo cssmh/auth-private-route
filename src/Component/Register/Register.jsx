@@ -4,7 +4,7 @@ import { CreateAuthContext } from "../../AuthProvider/AuthProvider";
 
 const Register = () => {
 
-    const {createUser} = useContext(CreateAuthContext)
+    const { createUser } = useContext(CreateAuthContext)
 
     const handleRegisterButton = (e) => {
         e.preventDefault();
@@ -19,6 +19,7 @@ const Register = () => {
         })
         .catch(err => console.log(err.message))
       };
+
     return (
         <div className="hero min-h-[86vh] bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -74,7 +75,7 @@ const Register = () => {
               </button>
             </div>
           </form>
-          <p className="text-center mt-5 mb-4">
+          <p className="text-center mt-2 mb-4">
             Already have an account ?{" "}
             <Link to={"/login"}>
               {" "}

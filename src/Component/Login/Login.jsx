@@ -1,10 +1,11 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { Link, useNavigate } from "react-router-dom";
 import { CreateAuthContext } from "../../AuthProvider/AuthProvider";
 
 const Login = () => {
-
-    const {loginUser} = useContext(CreateAuthContext)
+  const { loginUser, googleDirectLogin } = useContext(CreateAuthContext)
+  const navigateTo = useNavigate()
 
   const handleLoginButton = (e) => {
     e.preventDefault();
@@ -14,9 +15,24 @@ const Login = () => {
 
     // set to context function
     loginUser(email, password)
-    .then(res => console.log("login success", res.user))
+    .then(res => {
+      console.log(res.user);
+      console.log("login success")
+      e.target.reset();
+      navigateTo("/")
+    })
     .catch(err => console.log(err.message))
   };
+
+  const handlePopupLogin = () => {
+    googleDirectLogin()
+    .then(res => {
+      console.log(res.user);
+      console.log("google popup login success")
+      navigateTo("/")
+    })
+    .catch(err => console.log(err.message))
+  }
 
   return (
     <div className="hero min-h-[80vh] bg-base-200">
@@ -61,7 +77,8 @@ const Login = () => {
               </button>
             </div>
           </form>
-          <p className="text-center mt-5 mb-4">
+          <button onClick={handlePopupLogin} className="px-4 py-1 my-2 rounded-xl bg-red-100 text-3xl text-center mx-auto"><FcGoogle /></button>
+          <p className="text-center mb-4">
             New Here ?{" "}
             <Link to={"/register"}>
               {" "}

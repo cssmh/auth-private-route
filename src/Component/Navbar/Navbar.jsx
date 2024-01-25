@@ -14,22 +14,31 @@ const Navbar = () => {
       >
         Home
       </NavLink>
-      <NavLink
-        to={"/register"}
-        className={({ isActive }) =>
-          isActive ? "bg-green-400 btn hover:bg-green-400 text-white" : "btn"
-        }
-      >
-        Register
-      </NavLink>
-      <NavLink
-        to={"/login"}
-        className={({ isActive }) =>
-          isActive ? "bg-green-400 btn hover:bg-green-400 text-white" : "btn"
-        }
-      >
-        Login
-      </NavLink>
+
+      {!user && (
+        <>
+          <NavLink
+            to={"/register"}
+            className={({ isActive }) =>
+              isActive
+                ? "bg-green-400 btn hover:bg-green-400 text-white"
+                : "btn"
+            }
+          >
+            Register
+          </NavLink>
+          <NavLink
+            to={"/login"}
+            className={({ isActive }) =>
+              isActive
+                ? "bg-green-400 btn hover:bg-green-400 text-white"
+                : "btn"
+            }
+          >
+            Login
+          </NavLink>
+        </>
+      )}
       {user && (
         <>
           <NavLink

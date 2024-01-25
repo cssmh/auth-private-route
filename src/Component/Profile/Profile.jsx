@@ -1,6 +1,6 @@
 const Profile = () => {
     return (
-        <div>
+        <div className="max-w-7xl mx-auto">
             My Profile information here
         </div>
     );
