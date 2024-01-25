@@ -1,11 +1,16 @@
-import { NavLink } from "react-router-dom";
-
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { CreateAuthContext } from "../../AuthProvider/AuthProvider";
+import { signOut } from "firebase/auth";
+import auth from "../../firebase/firebase.config";
 const Navbar = () => {
+  const { user } = useContext(CreateAuthContext);
+
   const allNav = (
     <>
       <NavLink
         to={"/"}
-        className={({isActive}) =>
+        className={({ isActive }) =>
           isActive ? "bg-green-400 btn hover:bg-green-400 text-white" : "btn"
         }
       >
@@ -13,7 +18,7 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         to={"/register"}
-        className={({isActive}) =>
+        className={({ isActive }) =>
           isActive ? "bg-green-400 btn hover:bg-green-400 text-white" : "btn"
         }
       >
@@ -21,7 +26,7 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         to={"/login"}
-        className={({isActive}) =>
+        className={({ isActive }) =>
           isActive ? "bg-green-400 btn hover:bg-green-400 text-white" : "btn"
         }
       >
@@ -29,6 +34,12 @@ const Navbar = () => {
       </NavLink>
     </>
   );
+
+  const handleLogOut = () => {
+    signOut(auth)
+    .then(console.log("success logout"))
+    .then(err => console.log(err.message))
+  }
 
   return (
     <div className="navbar bg-base-100">
@@ -63,7 +74,15 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 space-x-1">{allNav}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {user ? (
+          <>
+            <span>{user.email}</span> <button onClick={handleLogOut} className="btn">LogOut</button>
+          </>
+        ) : (
+          <Link to={"/login"}>
+            <button className="btn">Login</button>
+          </Link>
+        )}
       </div>
     </div>
   );
