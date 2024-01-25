@@ -11,6 +11,8 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+
+    // set to context function
     loginUser(email, password)
     .then(res => console.log("login success", res.user))
     .catch(err => console.log(err.message))
