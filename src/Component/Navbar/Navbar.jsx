@@ -3,14 +3,29 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const allNav = (
     <>
-      <NavLink to={"/"}>
-        <button className="btn">Home</button>
+      <NavLink
+        to={"/"}
+        className={({isActive}) =>
+          isActive ? "bg-green-400 btn hover:bg-green-400 text-white" : "btn"
+        }
+      >
+        Home
       </NavLink>
-      <NavLink to={"/register"}>
-        <button className="btn">Register</button>
+      <NavLink
+        to={"/register"}
+        className={({isActive}) =>
+          isActive ? "bg-green-400 btn hover:bg-green-400 text-white" : "btn"
+        }
+      >
+        Register
       </NavLink>
-      <NavLink to={"/login"}>
-        <button className="btn">Login</button>
+      <NavLink
+        to={"/login"}
+        className={({isActive}) =>
+          isActive ? "bg-green-400 btn hover:bg-green-400 text-white" : "btn"
+        }
+      >
+        Login
       </NavLink>
     </>
   );
@@ -45,7 +60,7 @@ const Navbar = () => {
         <a className="btn btn-ghost text-xl">Private Route</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{allNav}</ul>
+        <ul className="menu menu-horizontal px-1 space-x-1">{allNav}</ul>
       </div>
       <div className="navbar-end">
         <a className="btn">Button</a>
