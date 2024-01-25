@@ -1,10 +1,8 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { CreateAuthContext } from "../../AuthProvider/AuthProvider";
-import { signOut } from "firebase/auth";
-import auth from "../../firebase/firebase.config";
 const Navbar = () => {
-  const { user } = useContext(CreateAuthContext);
+  const { user, logOut } = useContext(CreateAuthContext);
 
   const allNav = (
     <>
@@ -32,14 +30,38 @@ const Navbar = () => {
       >
         Login
       </NavLink>
+      {user && (
+        <>
+          <NavLink
+            to={"/orders"}
+            className={({ isActive }) =>
+              isActive
+                ? "bg-green-400 btn hover:bg-green-400 text-white"
+                : "btn"
+            }
+          >
+            Orders
+          </NavLink>
+          <NavLink
+            to={"/profile"}
+            className={({ isActive }) =>
+              isActive
+                ? "bg-green-400 btn hover:bg-green-400 text-white"
+                : "btn"
+            }
+          >
+            Profile
+          </NavLink>
+        </>
+      )}
     </>
   );
 
   const handleLogOut = () => {
-    signOut(auth)
-    .then(console.log("success logout"))
-    .then(err => console.log(err.message))
-  }
+    logOut()
+      .then(console.log("success logout"))
+      .then((err) => console.log(err.message));
+  };
 
   return (
     <div className="navbar bg-base-100">
@@ -76,7 +98,10 @@ const Navbar = () => {
       <div className="navbar-end">
         {user ? (
           <>
-            <span>{user.email}</span> <button onClick={handleLogOut} className="btn">LogOut</button>
+            <span>{user.email}</span>{" "}
+            <button onClick={handleLogOut} className="btn">
+              LogOut
+            </button>
           </>
         ) : (
           <Link to={"/login"}>
