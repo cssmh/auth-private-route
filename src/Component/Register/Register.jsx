@@ -1,27 +1,28 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CreateAuthContext } from "../../AuthProvider/AuthProvider";
 
 const Register = () => {
+  const navigateTo = useNavigate();
+  const { createUser, updateName } = useContext(CreateAuthContext);
 
-    const { createUser } = useContext(CreateAuthContext)
+  const handleRegisterButton = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(name, email, password);
 
-    const handleRegisterButton = (e) => {
-        e.preventDefault();
-        const name = e.target.name.value;
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        console.log(name, email, password);
+    createUser(email, password)
+      .then(() => {
+        updateName(name).then(console.log("name updated"));
+        navigateTo("/");
+      })
+      .catch((err) => console.log(err.message));
+  };
 
-        createUser(email, password)
-        .then(res=> {
-            console.log(res.user, "success");
-        })
-        .catch(err => console.log(err.message))
-      };
-
-    return (
-        <div className="hero min-h-[86vh] bg-base-200">
+  return (
+    <div className="hero min-h-[86vh] bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Reg now!</h1>
@@ -85,7 +86,7 @@ const Register = () => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default Register;
